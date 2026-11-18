@@ -1,0 +1,466 @@
+/* =========================================================
+   MedX Hospital - Main Stylesheet
+   ========================================================= */
+/* 1. Theme colors and global settings */
+:root {
+  --bg: #f4f9fa;
+  --surface: #fff;
+  --text: #0c2530;
+  --muted: #51697a;
+  --primary: #0a8a8a;
+  --primary-d: #066b6b;
+  --accent: #e4f4f4;
+  --border: #d7e6e9;
+  --navy: #0d3b66;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top,0px);
+  padding-bottom: env(safe-area-inset-bottom,0px);
+  color-scheme: light;
+}
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a181f;
+    --surface: #112530;
+    --text: #e5f1f4;
+    --muted: #9ab3bd;
+    --primary: #2cc3c3;
+    --primary-d: #5ad6d6;
+    --accent: #15323c;
+    --border: #23424e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a181f;
+  --surface: #112530;
+  --text: #e5f1f4;
+  --muted: #9ab3bd;
+  --primary: #2cc3c3;
+  --primary-d: #5ad6d6;
+  --accent: #15323c;
+  --border: #23424e;
+  color-scheme: dark;
+}
+/* 2. Basic page reset */
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(76px + env(safe-area-inset-top,0px));
+}
+/* 3. Main page layout */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  line-height: 1.6;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top,0px);
+  background: var(--surface);
+  z-index: 20;
+}
+.wrap {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+/* 4. Header and navigation */
+header {
+  position: sticky;
+  top: env(safe-area-inset-top,0px);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  z-index: 21;
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  gap: 14px;
+}
+.logo img {
+  height: 48px;
+  width: auto;
+  display: block;
+  background: #fff;
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+nav ul {
+  display: flex;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+nav ul a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .93rem;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+}
+nav ul a:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.phone {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .9rem;
+  background: var(--accent);
+  padding: 8px 14px;
+  border-radius: 30px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary);
+  color: #fff;
+  border: 0;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: .95rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+:root[data-theme="dark"] .btn,:root:not([data-theme="light"]) .btn {
+  color: #06222a;
+}
+.btn:hover {
+  background: var(--primary-d);
+}
+.btn.alt {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--border);
+}
+.theme {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+}
+/* 5. Hero section */
+.hero {
+  background: linear-gradient(120deg,var(--accent),var(--bg) 60%);
+  overflow: hidden;
+}
+.hero .wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 28px;
+  align-items: center;
+  padding-top: 44px;
+  padding-bottom: 44px;
+}
+.badge {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: .85rem;
+  font-weight: 600;
+}
+h1 {
+  font-size: clamp(2.3rem,5.5vw,3.7rem);
+  line-height: 1.08;
+  margin: 18px 0 14px;
+  font-weight: 800;
+}
+h1 span {
+  color: var(--primary);
+  display: block;
+}
+.hero p.lead {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 440px;
+  margin: 0 0 24px;
+}
+.cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.hstats {
+  display: flex;
+  gap: 22px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+.hstats div {
+  border-left: 2px solid var(--border);
+  padding-left: 12px;
+}
+.hstats div:first-child {
+  border: 0;
+  padding: 0;
+}
+.hstats b {
+  display: block;
+  font-size: 1.25rem;
+}
+.hstats span {
+  color: var(--muted);
+  font-size: .82rem;
+}
+.photo {
+  position: relative;
+}
+.photo>img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(10,80,90,.22);
+}
+.feat {
+  position: absolute;
+  right: -6px;
+  bottom: 18px;
+  background: color-mix(in srgb,var(--surface) 88%,transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: grid;
+  gap: 6px;
+  font-size: .82rem;
+  font-weight: 600;
+}
+/* 6. Shared section styles */
+section {
+  padding: 56px 0;
+}
+.eyebrow {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: .85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 2px;
+  background: var(--primary);
+}
+h2 {
+  font-size: 1.9rem;
+  line-height: 1.2;
+  margin: 8px 0 8px;
+}
+.sub {
+  color: var(--muted);
+  margin: 0 0 26px;
+  max-width: 480px;
+}
+/* 7. Department cards */
+.depts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
+  gap: 14px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: .2s;
+}
+a.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+}
+.card .ic {
+  font-size: 1.9rem;
+}
+.card h3 {
+  margin: 10px 0 2px;
+  font-size: 1rem;
+}
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .82rem;
+}
+/* 8. Doctor cards */
+.docs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap: 16px;
+}
+.doc {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.doc img {
+  width: 92px;
+  height: 104px;
+  object-fit: cover;
+  border-radius: 14px;
+  background: var(--accent);
+}
+.doc h3 {
+  margin: 0;
+}
+.doc .sp {
+  color: var(--muted);
+  font-size: .88rem;
+}
+.pill {
+  display: inline-block;
+  margin-top: 8px;
+  background: var(--accent);
+  color: var(--primary);
+  font-size: .78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.band {
+  background: var(--surface);
+  border-block: 1px solid var(--border);
+}
+/* 9. Appointment form */
+.book {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+form {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  display: grid;
+  gap: 12px;
+}
+label {
+  font-size: .84rem;
+  font-weight: 600;
+}
+input,select,textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  margin-top: 4px;
+}
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+#formMessage {
+  font-size: .9rem;
+  min-height: 1.2em;
+}
+.success-message {
+  color: var(--primary);
+}
+.error-message {
+  color: #d64545;
+}
+.info p {
+  margin: 0 0 14px;
+  color: var(--muted);
+}
+.info strong {
+  color: var(--text);
+}
+/* 10. Contact information and footer */
+.contact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 14px;
+  background: var(--navy);
+  border-radius: 20px;
+  padding: 24px;
+  color: #fff;
+}
+.contact div {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: .92rem;
+}
+.contact b {
+  display: block;
+}
+.contact span.i {
+  font-size: 1.4rem;
+}
+footer {
+  padding: 24px 0;
+  color: var(--muted);
+  font-size: .84rem;
+  text-align: center;
+}
+/* 11. Tablet and mobile layouts */
+@media (max-width:900px) {
+  nav ul,.phone {
+    display: none;
+  }
+  .hero .wrap,.book {
+    grid-template-columns: 1fr;
+  }
+  .feat {
+    position: static;
+    margin-top: 12px;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width:520px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+  .right .btn {
+    padding: 10px 14px;
+    font-size: .85rem;
+  }
+  .feat {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small utilities added while separating the original inline styles. */
+.btn-submit {
+  justify-content: center;
+}
+
+.contact-section {
+  padding-top: 0;
+}
