@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Page character and responsive settings -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | MedX Hospital</title>
+
+    <!-- Connect login CSS file -->
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <!-- Main login page container -->
+    <main class="login-container">
+
+        <!-- Left side: Brand information -->
+        <section class="login-info">
+
+            <a href="index.html" class="brand">
+                Med<span>X</span>
+            </a>
+
+            <h1>Your Health,<br>Our Priority.</h1>
+
+            <p>
+                Welcome to MedX Hospital.
+                Access your account to manage appointments
+                and stay connected with your healthcare team.
+            </p>
+
+            <div class="info-footer">
+                Trusted Healthcare. Better Living.
+            </div>
+
+        </section>
+
+
+        <!-- Right side: Login form -->
+        <section class="login-form-section">
+
+            <div class="login-card">
+
+                <a href="index.html" class="back-home">
+                    ← Back to Home
+                </a>
+
+                <h2>Welcome Back!</h2>
+
+                <p class="subtitle">
+                    Please login to your account.
+                </p>
+
+
+                <!-- Login form -->
+                <form id="loginForm">
+
+                    <!-- Email field -->
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Password field -->
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Remember me and forgot password -->
+                    <div class="form-options">
+
+                        <label class="remember-me">
+                            <input type="checkbox" id="rememberMe">
+                            Remember me
+                        </label>
+
+                        <a href="#" class="forgot-password">
+                            Forgot Password?
+                        </a>
+
+                    </div>
+
+
+                    <!-- Login button -->
+                    <button type="submit" class="login-btn">
+                        Login to Account
+                    </button>
+
+                    <!-- JavaScript message area -->
+                    <p id="loginMessage" aria-live="polite"></p>
+
+                </form>
+
+
+                <!-- Signup link -->
+                <p class="signup-text">
+                    Don't have an account?
+                    <a href="signup.html">Create Account</a>
+                </p>
+
+                <div class="security-note">
+                    Secure Healthcare Access
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Connect login JavaScript file -->
+    <script src="login.js"></script>
+
+</body>
+</html>
