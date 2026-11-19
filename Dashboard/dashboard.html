@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Dashboard | MedX Hospital</title>
+
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <a href="../index.html" class="brand">
+                Med<span>X</span>
+            </a>
+
+            <p class="sidebar-title">PATIENT MENU</p>
+
+            <nav class="sidebar-nav">
+
+                <a href="#overview" class="active">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="#appointments">
+                    <span>▣</span> My Appointments
+                </a>
+
+                <a href="#profile">
+                    <span>◉</span> My Profile
+                </a>
+
+                <a href="#records">
+                    <span>▤</span> Medical Records
+                </a>
+
+                <a href="../index.html#book">
+                    <span>＋</span> Book Appointment
+                </a>
+
+            </nav>
+
+            <a href="../Login/login.html" class="logout-btn">
+                ↪ Logout
+            </a>
+
+        </aside>
+
+
+        <!-- Main Dashboard -->
+        <main class="dashboard-main">
+
+            <!-- Top Header -->
+            <header class="dashboard-header">
+
+                <div>
+                    <h1>Patient Dashboard</h1>
+                    <p>Manage your healthcare in one place.</p>
+                </div>
+
+                <div class="patient-info">
+                    <div class="patient-avatar">P</div>
+
+                    <div>
+                        <h3>Patient Name</h3>
+                        <span>Patient Account</span>
+                    </div>
+                </div>
+
+            </header>
+
+
+            <!-- Dashboard Overview -->
+            <section id="overview" class="welcome-section">
+
+                <div>
+                    <p class="welcome-label">WELCOME TO MEDX</p>
+
+                    <h2>Hello, Patient! 👋</h2>
+
+                    <p>
+                        Take control of your health journey
+                        with MedX Hospital.
+                    </p>
+                </div>
+
+                <a href="../index.html#book" class="book-btn">
+                    + Book Appointment
+                </a>
+
+            </section>
+
+
+            <!-- Statistics Cards -->
+            <section class="stats-section">
+
+                <div class="stat-card">
+                    <span class="stat-icon">▣</span>
+                    <h3>My Appointments</h3>
+                    <h2>02</h2>
+                    <p>Total appointments</p>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-icon">◉</span>
+                    <h3>Medical Records</h3>
+                    <h2>04</h2>
+                    <p>Available records</p>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-icon">✓</span>
+                    <h3>Completed Visits</h3>
+                    <h2>01</h2>
+                    <p>Successful visits</p>
+                </div>
+
+            </section>
+
+
+            <!-- Appointments -->
+            <section id="appointments" class="content-section">
+
+                <div class="section-heading">
+                    <h2>My Appointments</h2>
+                    <a href="../index.html#book">Book New</a>
+                </div>
+
+                <div class="appointment-card">
+
+                    <div>
+                        <h3>General Consultation</h3>
+                        <p>Dr. Deeksha Yadav</p>
+                    </div>
+
+                    <span class="status">Upcoming</span>
+
+                    <div class="appointment-date">
+                        25 November 2026
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Patient Profile -->
+            <section id="profile" class="content-section">
+
+                <h2>My Profile</h2>
+
+                <div class="profile-card">
+
+                    <p><strong>Name:</strong> Patient Name</p>
+
+                    <p><strong>Email:</strong> patient@example.com</p>
+
+                    <p><strong>Mobile:</strong> +91 XXXXXXXXXX</p>
+
+                </div>
+
+            </section>
+
+
+            <!-- Medical Records -->
+            <section id="records" class="content-section">
+
+                <h2>Medical Records</h2>
+
+                <div class="records-card">
+
+                    <p>No medical records available yet.</p>
+
+                </div>
+
+            </section>
+
+
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                © 2026 MedX Hospital. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+    <!-- Dashboard JavaScript -->
+    <script src="dashboard.js"></script>
+
+</body>
+</html>
