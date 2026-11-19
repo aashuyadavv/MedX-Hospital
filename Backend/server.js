@@ -1,4 +1,4 @@
-
+const jwt = require("jsonwebtoken");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -97,6 +97,89 @@ app.post("/api/auth/signup", async (req, res) => {
 
         return res.status(500).json({
             message: "Server error during registration"
+        });
+    }
+
+});
+
+// Patient Login API
+app.post("/api/auth/login", async (req, res) => {
+
+    try {
+        // Step 1: Get login details
+        const { email, password } = req.body || {};
+
+        // Step 2: Check empty fields
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Email and password are required"
+            });
+        }
+
+        // Step 3: Validate input
+        if (
+            typeof email !== "string" ||
+            typeof password !== "string"
+        ) {
+            return res.status(400).json({
+                message: "Invalid login details"
+            });
+        }
+
+        // Step 4: Normalize email
+        const normalizedEmail = email.trim().toLowerCase();
+
+        // Step 5: Find patient
+        const patient = await Patient.findOne({
+            email: normalizedEmail
+        });
+
+        if (!patient) {
+            return res.status(401).json({
+                message: "Invalid email or password"
+            });
+        }
+
+        // Step 6: Compare password
+        const isPasswordValid = await bcrypt.compare(
+            password,
+            patient.password
+        );
+
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                message: "Invalid email or password"
+            });
+        }
+
+        // Step 7: Generate JWT Token
+        const token = jwt.sign(
+            {
+                patientId: patient._id,
+                email: patient.email
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: process.env.JWT_EXPIRES_IN || "1d"
+            }
+        );
+
+        // Step 8: Login success
+        return res.status(200).json({
+            message: "Login successful!",
+            token: token,
+            patient: {
+                id: patient._id,
+                fullName: patient.fullName,
+                email: patient.email
+            }
+        });
+
+    } catch (error) {
+        console.error("Login Error:", error.message);
+
+        return res.status(500).json({
+            message: "Server error during login"
         });
     }
 
