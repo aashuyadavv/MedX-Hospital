@@ -5,6 +5,7 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const Patient = require("./models/Patient");
 const authMiddleware = require("./middleware/authMiddleware");
+const Appointment = require("./models/Appointment");
 
 require("dotenv").config();
 
@@ -211,6 +212,73 @@ app.get("/api/patient/profile", authMiddleware, async (req, res) => {
 
         return res.status(500).json({
             message: "Server error while fetching profile"
+        });
+    }
+
+});
+
+// Book Appointment API
+app.post("/api/appointments", authMiddleware, async (req, res) => {
+
+    try {
+        const {
+            doctorName,
+            department,
+            appointmentDate,
+            appointmentTime,
+            reason
+        } = req.body || {};
+
+        // Check required fields
+        if (
+            !doctorName ||
+            !department ||
+            !appointmentDate ||
+            !appointmentTime ||
+            !reason
+        ) {
+            return res.status(400).json({
+                message: "All appointment fields are required"
+            });
+        }
+
+        // Validate appointment date
+        const date = new Date(appointmentDate);
+
+        if (Number.isNaN(date.getTime())) {
+            return res.status(400).json({
+                message: "Invalid appointment date"
+            });
+        }
+
+        if (date < new Date()) {
+            return res.status(400).json({
+                message: "Appointment date cannot be in the past"
+            });
+        }
+
+        // Create appointment
+        const newAppointment = new Appointment({
+            patient: req.patient.patientId,
+            doctorName,
+            department,
+            appointmentDate: date,
+            appointmentTime,
+            reason
+        });
+
+        await newAppointment.save();
+
+        return res.status(201).json({
+            message: "Appointment booked successfully!",
+            appointment: newAppointment
+        });
+
+    } catch (error) {
+        console.error("Appointment Error:", error.message);
+
+        return res.status(500).json({
+            message: "Server error while booking appointment"
         });
     }
 
