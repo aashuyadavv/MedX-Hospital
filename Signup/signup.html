@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | MedX Hospital</title>
+
+    <!-- Signup CSS -->
+    <link rel="stylesheet" href="signup.css">
+</head>
+
+<body>
+
+    <main class="signup-container">
+
+        <!-- Left Information Section -->
+        <section class="signup-info">
+
+            <a href="index.html" class="brand">
+                Med<span>X</span>
+            </a>
+
+            <h1>Your Health Journey Starts Here.</h1>
+
+            <p>
+                Create your MedX account to manage your
+                healthcare appointments and stay connected
+                with our medical team.
+            </p>
+
+            <div class="info-footer">
+                Trusted Healthcare. Better Living.
+            </div>
+
+        </section>
+
+
+        <!-- Right Signup Section -->
+        <section class="signup-form-section">
+
+            <div class="signup-card">
+
+                <a href="login.html" class="back-home">
+                    ← Back to Login
+                </a>
+
+                <h2>Create Account</h2>
+
+                <p class="subtitle">
+                    Join MedX Hospital today.
+                </p>
+
+
+                <!-- Signup Form -->
+                <form id="signupForm">
+
+                    <!-- Full Name -->
+                    <div class="form-group">
+
+                        <label for="fullName">Full Name</label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="form-group">
+
+                        <label for="signupEmail">Email Address</label>
+
+                        <input
+                            type="email"
+                            id="signupEmail"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Mobile Number -->
+                    <div class="form-group">
+
+                        <label for="mobile">Mobile Number</label>
+
+                        <input
+                            type="tel"
+                            id="mobile"
+                            name="mobile"
+                            placeholder="Enter your 10-digit mobile number"
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group">
+
+                        <label for="signupPassword">Password</label>
+
+                        <input
+                            type="password"
+                            id="signupPassword"
+                            name="password"
+                            placeholder="Create a password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+
+                        <label for="confirmPassword">Confirm Password</label>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Confirm your password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Terms and Conditions -->
+                    <div class="terms-group">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            required
+                        >
+
+                        <label for="terms">
+                            I agree to the Terms & Conditions
+                        </label>
+
+                    </div>
+
+
+                    <!-- Create Account Button -->
+                    <button type="submit" class="signup-btn">
+                        Create Account
+                    </button>
+
+                    <!-- Message -->
+                    <p id="signupMessage" aria-live="polite"></p>
+
+                </form>
+
+
+                <!-- Login Link -->
+                <p class="login-text">
+                    Already have an account?
+                    <a href="login.html">Login</a>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Signup JavaScript -->
+    <script src="signup.js"></script>
+
+</body>
+</html>
