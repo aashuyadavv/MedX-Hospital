@@ -464,3 +464,100 @@ footer {
 .contact-section {
   padding-top: 0;
 }
+
+/* Login and Signup Navigation */
+
+.login-nav-btn,
+.signup-nav-btn {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 9px 15px;
+    border-radius: 25px;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.login-nav-btn {
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.login-nav-btn:hover {
+    background: var(--accent);
+}
+
+.signup-nav-btn {
+    background: var(--primary);
+    color: white;
+}
+
+.signup-nav-btn:hover {
+    background: var(--primary-d);
+}
+
+/* Navbar Responsive Fix */
+
+@media (max-width: 900px) {
+
+    nav ul,
+    .phone {
+        display: none;
+    }
+
+    nav {
+        height: auto;
+        min-height: 68px;
+        flex-wrap: wrap;
+        padding: 10px 0;
+        gap: 10px;
+    }
+
+    .logo img {
+        height: 42px;
+    }
+
+    .right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .right .btn {
+        padding: 9px 13px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .login-nav-btn,
+    .signup-nav-btn {
+        padding: 8px 11px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 520px) {
+
+    nav {
+        justify-content: center;
+    }
+
+    .logo {
+        margin-right: auto;
+    }
+
+    .right {
+        gap: 6px;
+    }
+
+    .theme {
+        flex-shrink: 0;
+    }
+
+    .right .btn {
+        font-size: 12px;
+        padding: 9px 10px;
+    }
+}
