@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const Patient = require("./models/Patient");
+const authMiddleware = require("./middleware/authMiddleware");
 
 require("dotenv").config();
 
@@ -180,6 +181,36 @@ app.post("/api/auth/login", async (req, res) => {
 
         return res.status(500).json({
             message: "Server error during login"
+        });
+    }
+
+});
+
+// Protected Patient Profile API
+app.get("/api/patient/profile", authMiddleware, async (req, res) => {
+
+    try {
+        // Find logged-in patient
+        const patient = await Patient.findById(
+            req.patient.patientId
+        ).select("-password");
+
+        if (!patient) {
+            return res.status(404).json({
+                message: "Patient not found"
+            });
+        }
+
+        return res.status(200).json({
+            message: "Patient profile fetched successfully!",
+            patient: patient
+        });
+
+    } catch (error) {
+        console.error("Profile Error:", error.message);
+
+        return res.status(500).json({
+            message: "Server error while fetching profile"
         });
     }
 
