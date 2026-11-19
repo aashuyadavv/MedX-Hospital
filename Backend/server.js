@@ -284,6 +284,31 @@ app.post("/api/appointments", authMiddleware, async (req, res) => {
 
 });
 
+// Get All Appointments API
+app.get("/api/appointments", authMiddleware, async (req, res) => {
+
+    try {
+        // Find appointments of logged-in patient
+        const appointments = await Appointment.find({
+            patient: req.patient.patientId
+        }).sort({ appointmentDate: -1 });
+
+        return res.status(200).json({
+            message: "Appointments fetched successfully!",
+            totalAppointments: appointments.length,
+            appointments: appointments
+        });
+
+    } catch (error) {
+        console.error("Get Appointments Error:", error.message);
+
+        return res.status(500).json({
+            message: "Server error while fetching appointments"
+        });
+    }
+
+});
+
 // Test Route
 app.get("/", (req, res) => {
     res.send("MedX Hospital Backend is Running!");
