@@ -309,6 +309,168 @@ app.get("/api/appointments", authMiddleware, async (req, res) => {
 
 });
 
+
+// Update Appointment API
+app.patch("/api/appointments/:id", authMiddleware, async (req, res) => {
+
+    try {
+        // Step 1: Get appointment ID
+        const appointmentId = req.params.id;
+
+        // Step 2: Find patient's appointment
+        const appointment = await Appointment.findOne({
+            _id: appointmentId,
+            patient: req.patient.patientId
+        });
+
+        if (!appointment) {
+            return res.status(404).json({
+                message: "Appointment not found"
+            });
+        }
+
+        // Step 3: Check appointment status
+        if (["Cancelled", "Completed"].includes(appointment.status)) {
+            return res.status(400).json({
+                message: "This appointment cannot be updated"
+            });
+        }
+
+        // Step 4: Allowed fields
+        const allowedFields = [
+            "doctorName",
+            "department",
+            "appointmentDate",
+            "appointmentTime",
+            "reason"
+        ];
+
+        const updates = req.body || {};
+        const updateFields = Object.keys(updates);
+
+        if (
+            updateFields.length === 0 ||
+            updateFields.some(field => !allowedFields.includes(field))
+        ) {
+            return res.status(400).json({
+                message: "Invalid or empty update fields"
+            });
+        }
+
+        // Step 5: Validate and update fields
+        for (const field of updateFields) {
+
+            if (
+                typeof updates[field] !== "string" ||
+                !updates[field].trim()
+            ) {
+                return res.status(400).json({
+                    message: `Invalid ${field}`
+                });
+            }
+
+            if (field === "appointmentDate") {
+                const date = new Date(updates[field]);
+
+                if (
+                    Number.isNaN(date.getTime()) ||
+                    date < new Date()
+                ) {
+                    return res.status(400).json({
+                        message: "Invalid or past appointment date"
+                    });
+                }
+
+                appointment.appointmentDate = date;
+            } else {
+                appointment[field] = updates[field].trim();
+            }
+        }
+
+        // Step 6: Save updated appointment
+        await appointment.save();
+
+        return res.status(200).json({
+            message: "Appointment updated successfully!",
+            appointment
+        });
+
+    } catch (error) {
+        console.error("Update Appointment Error:", error.message);
+
+        if (error.name === "CastError") {
+            return res.status(400).json({
+                message: "Invalid appointment ID"
+            });
+        }
+
+        return res.status(500).json({
+            message: "Server error while updating appointment"
+        });
+    }
+
+});
+
+
+// Cancel Appointment API
+app.patch("/api/appointments/:id/cancel", authMiddleware, async (req, res) => {
+
+    try {
+        // Step 1: Get appointment ID
+        const appointmentId = req.params.id;
+
+        // Step 2: Find patient's appointment
+        const appointment = await Appointment.findOne({
+            _id: appointmentId,
+            patient: req.patient.patientId
+        });
+
+        if (!appointment) {
+            return res.status(404).json({
+                message: "Appointment not found"
+            });
+        }
+
+        // Step 3: Check appointment status
+        if (appointment.status === "Cancelled") {
+            return res.status(400).json({
+                message: "Appointment is already cancelled"
+            });
+        }
+
+        if (appointment.status === "Completed") {
+            return res.status(400).json({
+                message: "Completed appointment cannot be cancelled"
+            });
+        }
+
+        // Step 4: Update status
+        appointment.status = "Cancelled";
+
+        // Step 5: Save changes
+        await appointment.save();
+
+        return res.status(200).json({
+            message: "Appointment cancelled successfully!",
+            appointment
+        });
+
+    } catch (error) {
+        console.error("Cancel Appointment Error:", error.message);
+
+        if (error.name === "CastError") {
+            return res.status(400).json({
+                message: "Invalid appointment ID"
+            });
+        }
+
+        return res.status(500).json({
+            message: "Server error while cancelling appointment"
+        });
+    }
+
+});
+
 // Test Route
 app.get("/", (req, res) => {
     res.send("MedX Hospital Backend is Running!");
