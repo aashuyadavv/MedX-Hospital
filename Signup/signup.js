@@ -57,8 +57,8 @@ signupForm.addEventListener("submit", function (event) {
         return;
     }
 
-    // Frontend validation successful
-    showMessage("Signup form validated successfully!", "success");
+// Send signup data to backend
+registerPatient(nameValue, emailValue, mobileValue, passwordValue);
 
 });
 
@@ -74,4 +74,41 @@ function showMessage(message, type) {
         signupMessage.style.color = "red";
     }
 
+}
+// Register patient with backend
+async function registerPatient(name, email, mobile, password) {
+
+    try {
+        showMessage("Creating your account...", "success");
+
+        const response = await fetch("http://localhost:5000/api/auth/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                fullName: name,
+                email: email,
+                mobile: mobile,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            showMessage(data.message || "Signup failed.", "error");
+            return;
+        }
+
+        showMessage("Account created successfully!", "success");
+
+        signupForm.reset();
+
+    } catch (error) {
+
+        console.error("Signup Error:", error);
+
+        showMessage("Unable to connect to server. Please try again.", "error");
+    }
 }
