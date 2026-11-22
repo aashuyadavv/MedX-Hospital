@@ -38,8 +38,8 @@ loginForm.addEventListener("submit", function (event) {
         return;
     }
 
-    // Demo login message
-    showMessage("Login form validated successfully!", "success");
+    // Connect with backend login API
+    loginPatient(email, password);
 
 });
 
@@ -55,4 +55,49 @@ function showMessage(message, type) {
         loginMessage.style.color = "red";
     }
 
+}
+// Login patient with backend
+async function loginPatient(email, password) {
+
+    try {
+
+        showMessage("Logging in...", "success");
+
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            showMessage(data.message || "Login failed.", "error");
+            return;
+        }
+
+        // Save JWT token
+        localStorage.setItem("medxToken", data.token);
+
+        // Save patient details
+        localStorage.setItem("patientName", data.fullName);
+        localStorage.setItem("patientEmail", data.email);
+
+        showMessage("Login successful! Redirecting...", "success");
+
+        setTimeout(() => {
+            window.location.href = "../Dashboard/dashboard.html";
+        }, 1000);
+
+    } catch (error) {
+
+        console.error("Login Error:", error);
+
+        showMessage("Unable to connect to server.", "error");
+    }
 }
