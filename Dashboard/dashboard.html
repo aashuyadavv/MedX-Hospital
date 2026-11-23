@@ -71,7 +71,7 @@
                     <div class="patient-avatar">P</div>
 
                     <div>
-                        <h3>Patient Name</h3>
+                        <h3 id="patientName">Patient Name</h3>
                         <span>Patient Account</span>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                 <div>
                     <p class="welcome-label">WELCOME TO MEDX</p>
 
-                    <h2>Hello, Patient! 👋</h2>
+                    <h2 id="welcomeName">Hello, Patient! 👋</h2>
 
                     <p>
                         Take control of your health journey
@@ -106,7 +106,7 @@
                 <div class="stat-card">
                     <span class="stat-icon">▣</span>
                     <h3>My Appointments</h3>
-                    <h2>02</h2>
+                    <h2 id="appointmentsCount">0</h2>
                     <p>Total appointments</p>
                 </div>
 
@@ -154,21 +154,28 @@
 
 
             <!-- Patient Profile -->
-            <section id="profile" class="content-section">
+        <!-- Patient Profile -->
+        <section id="profile" class="content-section">
 
-                <h2>My Profile</h2>
+            <h2>My Profile</h2>
 
-                <div class="profile-card">
+            <div class="profile-card">
 
-                    <p><strong>Name:</strong> Patient Name</p>
+                <p><strong>Name:</strong>
+                    <span id="profileName">Patient Name</span>
+                </p>
 
-                    <p><strong>Email:</strong> patient@example.com</p>
+                <p><strong>Email:</strong>
+                    <span id="profileEmail">patient@example.com</span>
+                </p>
 
-                    <p><strong>Mobile:</strong> +91 XXXXXXXXXX</p>
+                <p><strong>Mobile:</strong>
+                    <span id="profileMobile">XXXXXXXXXX</span>
+                </p>
 
-                </div>
+            </div>
 
-            </section>
+        </section>
 
 
             <!-- Medical Records -->
