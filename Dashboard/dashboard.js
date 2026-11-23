@@ -96,3 +96,33 @@ async function loadPatientProfile() {
 
 // Load dashboard data
 loadPatientProfile();
+// Load Patient Appointments
+async function loadAppointments() {
+    const token = localStorage.getItem("medxToken");
+
+    if (!token) {
+        window.location.href = "../Login/login.html";
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:5000/api/appointments", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Failed to load appointments");
+        }
+
+        console.log("Appointments:", data);
+
+    } catch (error) {
+        console.error("Appointments Error:", error);
+    }
+}
+loadAppointments();
