@@ -119,7 +119,22 @@ async function loadAppointments() {
             throw new Error(data.message || "Failed to load appointments");
         }
 
-        console.log("Appointments:", data);
+    console.log("Appointments:", JSON.stringify(data, null, 2));
+    // Update Total Appointments Count
+document.getElementById("appointmentsCount").textContent =
+    data.totalAppointments;
+
+// Get Appointments Container
+const appointmentsList = document.getElementById("appointmentsList");
+
+// Clear Previous Content
+appointmentsList.innerHTML = "";
+
+// Check If Appointments Exist
+if (data.appointments.length === 0) {
+    appointmentsList.textContent = "No appointments found.";
+    return;
+}
 
     } catch (error) {
         console.error("Appointments Error:", error);
