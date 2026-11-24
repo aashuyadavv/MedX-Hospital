@@ -126,6 +126,10 @@ document.getElementById("appointmentsCount").textContent =
 
 // Get Appointments Container
 const appointmentsList = document.getElementById("appointmentsList");
+if (!appointmentsList) {
+    console.error("appointmentsList element not found!");
+    return;
+}
 
 // Clear Previous Content
 appointmentsList.innerHTML = "";
@@ -133,8 +137,42 @@ appointmentsList.innerHTML = "";
 // Check If Appointments Exist
 if (data.appointments.length === 0) {
     appointmentsList.textContent = "No appointments found.";
+    console.log("No appointments found.");
     return;
 }
+// Display Appointment Cards
+data.appointments.forEach((appointment) => {
+
+    const appointmentCard = document.createElement("div");
+    appointmentCard.className = "appointment-card";
+
+    const details = document.createElement("div");
+
+    const doctorHeading = document.createElement("h3");
+    doctorHeading.textContent = appointment.doctorName;
+
+    const departmentText = document.createElement("p");
+    departmentText.textContent = appointment.department;
+
+    details.appendChild(doctorHeading);
+    details.appendChild(departmentText);
+
+    const status = document.createElement("span");
+    status.className = "status";
+    status.textContent = appointment.status;
+
+    const date = document.createElement("div");
+    date.className = "appointment-date";
+    date.textContent = new Date(appointment.appointmentDate)
+        .toLocaleDateString("en-IN");
+
+    appointmentCard.appendChild(details);
+    appointmentCard.appendChild(status);
+    appointmentCard.appendChild(date);
+
+    appointmentsList.appendChild(appointmentCard);
+
+});
 
     } catch (error) {
         console.error("Appointments Error:", error);
