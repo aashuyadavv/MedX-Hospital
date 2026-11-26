@@ -158,17 +158,23 @@ data.appointments.forEach((appointment) => {
     details.appendChild(departmentText);
 
     const status = document.createElement("span");
-    status.className = "status";
+    status.className = `status ${appointment.status.toLowerCase()}`;
     status.textContent = appointment.status;
 
-    const date = document.createElement("div");
-    date.className = "appointment-date";
-    date.textContent = new Date(appointment.appointmentDate)
-        .toLocaleDateString("en-IN");
+const date = document.createElement("div");
+date.className = "appointment-date";
+
+date.textContent =
+    new Date(appointment.appointmentDate).toLocaleDateString("en-IN");
+
+const time = document.createElement("p");
+time.className = "appointment-time";
+time.textContent = `Time: ${appointment.appointmentTime}`;
 
     appointmentCard.appendChild(details);
     appointmentCard.appendChild(status);
     appointmentCard.appendChild(date);
+    appointmentCard.appendChild(time);
     // Cancel Appointment Button
 if (appointment.status !== "Cancelled" &&
     appointment.status !== "Completed") {
