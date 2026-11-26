@@ -169,6 +169,57 @@ data.appointments.forEach((appointment) => {
     appointmentCard.appendChild(details);
     appointmentCard.appendChild(status);
     appointmentCard.appendChild(date);
+    // Cancel Appointment Button
+if (appointment.status !== "Cancelled" &&
+    appointment.status !== "Completed") {
+
+    const cancelButton = document.createElement("button");
+
+    cancelButton.textContent = "Cancel Appointment";
+    cancelButton.className = "cancel-btn";
+
+    cancelButton.addEventListener("click", async () => {
+
+        const confirmCancel = confirm(
+            "Are you sure you want to cancel this appointment?"
+        );
+
+        if (!confirmCancel) {
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem("medxToken");
+
+            const response = await fetch(
+                `http://localhost:5000/api/appointments/${appointment._id}/cancel`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                alert(result.message || "Unable to cancel appointment.");
+                return;
+            }
+
+            alert("Appointment cancelled successfully!");
+
+            loadAppointments();
+
+        } catch (error) {
+            console.error("Cancel Error:", error);
+            alert("Something went wrong. Please try again.");
+        }
+    });
+
+    appointmentCard.appendChild(cancelButton);
+}
 
     appointmentsList.appendChild(appointmentCard);
 
