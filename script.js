@@ -53,11 +53,19 @@ document.addEventListener('DOMContentLoaded', function () {
   // 4. Validate the appointment form and prepare a WhatsApp link.
   // ---------------------------------------------------------
   if (appointmentForm) {
-    appointmentForm.addEventListener('submit', function (event) {
+appointmentForm.addEventListener('submit', async function (event) {
       // Stop the browser from reloading the page on form submission.
       event.preventDefault();
 
       // Read the visitor's details from the form.
+      // Check patient login
+      const token = localStorage.getItem('medxToken');
+
+      if (!token) {
+          formMessage.className = 'error-message';
+          formMessage.textContent = 'Please login before booking an appointment.';
+          return;
+      }
       const fullName = document.getElementById('fullName').value.trim();
       const phoneNumber = document.getElementById('phoneNumber').value.replace(/\D/g, '');
       const department = document.getElementById('department').value;
@@ -72,34 +80,59 @@ document.addEventListener('DOMContentLoaded', function () {
           'Please enter your name, a valid 10-digit phone number and a preferred date.';
         return;
       }
+      // Save appointment to MongoDB through backend API
+const response = await fetch('http://localhost:5000/api/appointments', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({
+        doctorName: doctor,
+        department: department,
+        appointmentDate: preferredDate,
+        appointmentTime: '11:00 AM',
+        reason: message || 'Regular consultation'
+    })
+});
 
-      // Prepare the appointment details as a WhatsApp message.
-      const appointmentDetails = [
-        'Appointment request',
-        `Name: ${fullName}`,
-        `Phone: ${phoneNumber}`,
-        `Department: ${department}`,
-        `Doctor: ${doctor}`,
-        `Date: ${preferredDate}`,
-        `Note: ${message || 'Not provided'}`
-      ].join('\n');
+const data = await response.json();
 
-      // Replace this sample number with the hospital's WhatsApp number.
-      const hospitalWhatsAppNumber = '919990219967';
-      const whatsappURL =
-        `https://wa.me/${hospitalWhatsAppNumber}?text=${encodeURIComponent(appointmentDetails)}`;
+if (!response.ok) {
+    formMessage.className = 'error-message';
+    formMessage.textContent = data.message || 'Appointment booking failed.';
+    return;
+}
 
-      // Show a confirmation message and a link to WhatsApp.
-      formMessage.className = 'success-message';
-      formMessage.textContent = `Thank you, ${fullName}! `;
+console.log('Appointment saved:', data);
+// Prepare WhatsApp message after successful database save
+const appointmentDetails = [
+    'Appointment request',
+    `Name: ${fullName}`,
+    `Phone: ${phoneNumber}`,
+    `Department: ${department}`,
+    `Doctor: ${doctor}`,
+    `Date: ${preferredDate}`,
+    `Note: ${message || 'Not provided'}`
+].join('\n');
 
-      const whatsappLink = document.createElement('a');
-      whatsappLink.href = whatsappURL;
-      whatsappLink.target = '_blank';
-      whatsappLink.rel = 'noopener noreferrer';
-      whatsappLink.textContent = 'Send on WhatsApp to confirm';
+const hospitalWhatsAppNumber = '919990219967';
 
-      formMessage.appendChild(whatsappLink);
+const whatsappURL =
+    `https://wa.me/${hospitalWhatsAppNumber}?text=${encodeURIComponent(appointmentDetails)}`;
+
+formMessage.className = 'success-message';
+formMessage.textContent = `Thank you, ${fullName}! `;
+
+const whatsappLink = document.createElement('a');
+whatsappLink.href = whatsappURL;
+whatsappLink.target = '_blank';
+whatsappLink.rel = 'noopener noreferrer';
+whatsappLink.textContent = 'Send on WhatsApp to confirm';
+
+formMessage.appendChild(whatsappLink);
+
+appointmentForm.reset();
     });
   }
 });
